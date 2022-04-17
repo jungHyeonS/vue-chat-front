@@ -8,17 +8,17 @@
                         <v-spacer></v-spacer>
                     </v-toolbar>
                     <v-card-text>
-                        <v-form>
+                        <v-form v-model="input.valid">
                             <v-text-field  label="아이디" type="text" v-model="input.id" :rules="input.idRules" required></v-text-field>
                             <v-text-field  label="비밀번호" type="password" v-model="input.password" :rules="input.passRules" required></v-text-field>
-                            <v-text-field  label="비밀번호확인" type="password" v-model="input.passwordChk" :rules="confirmPasswordRules" required></v-text-field>
+                            <v-text-field  label="비밀번호확인" type="password" v-model="input.passwordChk"></v-text-field>
                             <v-text-field  label="닉네임" type="password" v-model="input.nickname"></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="primary" >로그인</v-btn>
-                        <v-btn color="primary" >회원가입</v-btn>
+                        <v-btn color="primary" @click="join()">회원가입</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -42,6 +42,7 @@
         },
         data: () => ({
             input:{
+                valid: false,
                 id:"",
                 password:"",
                 passwordChk:"",
@@ -58,6 +59,19 @@
                     }
                 ],
             }
-        })
+        }),
+        methods:{
+            join(){
+                // console.log(this.input.valid);
+                if(this.input.valid){
+                    let params = this.input;
+                    this.axios.post("/join",params).then((res)=>{
+                        console.log(res);
+                    }).catch((err)=>{
+                        console.log(err);
+                    });
+                }
+            }
+        }
     }
 </script>
