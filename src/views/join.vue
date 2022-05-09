@@ -66,7 +66,12 @@
                 if(this.input.valid){
                     let params = this.input;
                     this.axios.post("/join",params).then((res)=>{
-                        console.log(res);
+                        if(!res.data.err){
+                            alert("회원가입이 완료되었습니다.");
+                            this.$router.replace('/')
+                        }else{
+                            alert(res.data.errMsg);
+                        }
                     }).catch((err)=>{
                         console.log(err);
                     });

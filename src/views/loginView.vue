@@ -16,7 +16,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="primary" >로그인</v-btn>
-                        <v-btn color="primary" >회원가입</v-btn>
+                        <v-btn color="primary" @click="goJoin()">회원가입</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -25,6 +25,11 @@
 </template>
 <script>
     export default {
-        
+        name :"loginView",
+        methods:{
+            goJoin(){
+                this.$router.push('join')
+            }
+        }
     }
 </script>
