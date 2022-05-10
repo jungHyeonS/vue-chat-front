@@ -51,7 +51,12 @@
                         pass : this.input.password
                     }
                     this.axios.post("/login",params).then((res)=>{
-                        console.log(res);
+                        // console.log(res);
+                        if(res.data.err == 0){
+                            alert("로그인 성공");
+                        }else{
+                            alert(res.data.errMsg);
+                        }
                     }).catch((err)=>{
                         console.log(err);
                     });
