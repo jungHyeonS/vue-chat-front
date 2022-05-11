@@ -54,6 +54,7 @@
                         // console.log(res);
                         if(res.data.err == 0){
                             alert("로그인 성공");
+                            this.$router.replace('/roomList')
                         }else{
                             alert(res.data.errMsg);
                         }
