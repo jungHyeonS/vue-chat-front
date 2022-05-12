@@ -3,7 +3,7 @@
         <v-row  justify="center">
             <v-col cols="12" sm="8" md="4" lg="4">
                 <v-card>
-                    <p>room</p>
+                    <p>room{{$store.state.token}}</p>
                 </v-card>
             </v-col>
         </v-row>

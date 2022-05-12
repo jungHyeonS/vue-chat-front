@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 import axios from "axios";
+import store from "@/store/index.js";
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -37,8 +38,8 @@ _axios.interceptors.request.use(
     config.withCredentials = false;
 
     //토큰 등록
-    if(localStorage.getItem("accessToken")){
-      config.headers.common["Authorization"] = "Bearer " + localStorage.getItem("accessToken");
+    if(store.state.token != ""){
+      config.headers.common["Authorization"] = "Bearer " + store.state.token;
     }
 
     return config;
