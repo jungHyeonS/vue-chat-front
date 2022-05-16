@@ -1,0 +1,220 @@
+.clearfix {
+  *zoom: 1;
+}
+
+.clearfix:before, .clearfix:after {
+  display: block;
+  content: '';
+  line-height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.col {
+  padding: 0px;
+}
+
+.roomList {
+  width: 20%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 600px;
+  overflow: scroll;
+  float: left;
+  position: relative;
+}
+
+.roomList .searchBar {
+  z-index: 1;
+  width: 100%;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.roomList .searchBar .searchWrap {
+  margin: 0 auto;
+  width: 80%;
+  float: left;
+}
+
+.roomList .searchBar .searchWrap .search {
+  border: 1px solid #ddd;
+  width: 100%;
+  height: 30px;
+  border-radius: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 14px;
+}
+
+.roomList .searchBar .addRoom {
+  float: left;
+  background: #1976d2;
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.roomList .searchBar .addRoom img {
+  width: 30px;
+}
+
+.roomList ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.roomList ul li {
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.roomList ul li h1 {
+  font-size: 18px;
+  color: #1976d2;
+}
+
+.roomList ul li p {
+  color: #ccc;
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+
+.roomList ul li .time {
+  font-size: 10px;
+  color: #ccc;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.roomList ul li .bar {
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  bottom: 0px;
+  background: #1976d2;
+  left: 0px;
+}
+
+.chat {
+  width: 80%;
+  float: left;
+}
+
+.wrap {
+  height: 600px;
+}
+
+.wrap .titleBar {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.wrap .titleBar h1 {
+  font-size: 18px;
+  color: #1976d2;
+  float: left;
+}
+
+.wrap .titleBar img {
+  float: left;
+  display: none;
+}
+
+.wrap .chatList {
+  background: rgba(202, 229, 255, 0.3);
+  min-height: 500px;
+}
+
+.wrap .chatList .chatItem {
+  padding: 10px;
+}
+
+.wrap .chatList .chatItem p {
+  font-size: 12px;
+  color: #afafaf;
+  margin-bottom: 0px;
+}
+
+.wrap .chatList .chatItem .content {
+  background: #fff;
+  display: inline-block;
+  padding: 12px;
+  border-radius: 0px 10px 10px 10px;
+  border: .5px solid #1976d2;
+  -webkit-box-shadow: 1px 1px 5px 1px #ccc;
+          box-shadow: 1px 1px 5px 1px #ccc;
+}
+
+.wrap .chatList .otherChat .chatWrap {
+  float: left;
+}
+
+.wrap .chatList .meChat p {
+  text-align: right;
+}
+
+.wrap .chatList .meChat .chatWrap {
+  float: right;
+}
+
+.wrap .chatList .meChat .chatWrap .content {
+  border-radius: 10px 0px 10px 10px;
+  background: #1976d2;
+  color: #fff;
+}
+
+.wrap .chatSend textarea {
+  width: 95%;
+  resize: none;
+  border: .5px solid #1976d2;
+  height: 100%;
+  float: left;
+}
+
+.wrap .chatSend .sendBtn {
+  width: 5%;
+  background: #1976d2;
+  float: left;
+  text-align: center;
+  line-height: 50px;
+}
+
+.wrap .chatSend .sendBtn i {
+  color: white;
+}
+
+@media screen and (max-width: 425px) {
+  .wrap {
+    position: relative;
+  }
+  .wrap .titleBar img {
+    display: block;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .roomList {
+    display: none;
+    width: 250px;
+    position: absolute;
+    background: white;
+    -webkit-animation-direction: 1s;
+            animation-direction: 1s;
+    -webkit-animation-name: slide;
+            animation-name: slide;
+  }
+  .roomDp {
+    display: block;
+  }
+  .chat {
+    width: 100%;
+    float: left;
+  }
+}
+/*# sourceMappingURL=style.css.map */
