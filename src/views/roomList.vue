@@ -5,10 +5,22 @@
                 <v-card>
                     <!-- <p>room{{$store.state.token}}</p> -->
                     <div class="wrap clearfix">
-                        <div class="roomList">
+                        
+                        <div class="roomList" :class="{'roomDp':isSidebar}" ref="room" v-click-outside="onClick">
+                            
+                            <div class="searchBar clearfix">
+                                <div class="searchWrap">
+                                    <input type="text" class="search" placeholder="검색어를 입력해주세요."/>
+                                </div>
+                                <div class="addRoom">
+                                    <img src="@/assets/add.svg"/>
+                                </div>
+                            </div>
                             <ul>
                                 <li>
-                                    <h1>채팅방 1</h1>
+                                    <h1>채팅방 1
+                                        
+                                    </h1>
                                     <p>현재 접속 인원 : 20명</p>
                                     <span class="time">오후 12:28</span>
                                     <div class="bar"></div>
@@ -82,7 +94,8 @@
                             </ul>
                         </div>
                         <div class="chat">
-                            <div class="titleBar">
+                            <div class="titleBar clearfix" ref="titlebar">
+                                <img src="@/assets/list.svg" @click="isSidebar = true"/>
                                 <h1>채팅방 1</h1>
                             </div>
                             <div class="chatList">
@@ -108,8 +121,12 @@
                             <div class="chatSend clearfix">
                                 <textarea>aa</textarea>
                                 <div class="sendBtn">
+                                    <!-- <v-icon
+                                    color="white"
+                                    >
+                                    mdi-send
+                                    </v-icon> -->
                                     <v-icon
-                                    
                                     color="white"
                                     >
                                     mdi-send
@@ -124,9 +141,11 @@
     </v-container>
 </template>
 <script>
+    import vClickOutSlide from 'v-click-outside'
     export default {
         name :"roomListPage",
         data: () => ({
+            isSidebar:false
         }),
         mounted(){
             this.axios.get("/roomList",{}).then((res)=>{
@@ -134,8 +153,20 @@
             }).catch((err)=>{
                 console.log(err);
             });
+
+            // window.addEventListener('click',this.onClick)
         },
         methods:{
+            onClick(e){
+                console.log(e.target.parentNode);
+
+                if(e.target.parentNode !== this.$refs.titlebar){
+                    this.isSidebar = false;
+                }
+            }
+        },
+        directives:{
+            clickOutSlide : vClickOutSlide.directives
         }
     }
 </script>
@@ -153,6 +184,53 @@
     height: 600px;
     overflow: scroll;
     float: left;
+    position: relative;
+    // .addRoom{
+    //     width: 50px;
+    //     height: 50px;
+    //     background: #1976d2;;
+    //     text-align: center;
+    //     border-radius: 100%;
+    //     position: absolute;
+    //     right: 20px;
+    //     bottom: 20px;
+    //     img{
+    //         margin-top: 5px;
+    //         width: 40px;
+    //     }
+    //     z-index: 2;
+    // }
+    .searchBar{
+        z-index: 1;
+        width: 100%;
+        padding-top: 10px;
+        padding-left: 10px;
+        .searchWrap{
+            margin: 0 auto;
+            width: 80%;
+            float: left;
+            .search{
+                border: 1px solid #ddd;
+                width: 100%;
+                height: 30px;
+                border-radius:20px;
+                padding-left: 10px;
+                padding-right: 10px;
+                font-size: 14px;
+            }
+        }
+        .addRoom{
+            float: left;
+            background: #1976d2;;
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
+            cursor: pointer;
+            img{
+                width: 30px;
+            }
+        }
+    }
     ul{
         list-style: none;
         padding-left: 0;
@@ -202,7 +280,11 @@
         h1{
             font-size: 18px;
             color:#1976d2;
-
+            float: left;
+        }
+        img{
+            float: left;
+            display: none;
         }
     }
     .chatList{
@@ -263,5 +345,32 @@
         }
     }
 }
-
+@media screen and (max-width: 425px) {
+    .wrap{
+        position: relative;
+        .titleBar{
+            img{
+                display: block;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+    .roomList{
+        display: none;
+        width: 250px;
+        position: absolute;
+        background: white;
+        animation-direction: 1s;
+        animation-name: slide;
+    }
+    
+    .roomDp{
+        display: block;
+    }
+    .chat{
+        width: 100%;
+        float: left;
+    }
+}
 </style>
