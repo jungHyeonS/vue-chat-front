@@ -1,7 +1,7 @@
 <template>
     <v-container fluid fill-height>
         <v-row  justify="center">
-            <v-col cols="12" sm="8" md="4" lg="12">
+            <v-col cols="12" sm="8" md="12" lg="12">
                 <v-card>
                     <div class="wrap clearfix">
                         <div class="roomList" :class="{'roomDp':isSidebar}" ref="room" v-click-outside="onClick">
@@ -10,7 +10,8 @@
                                     <input type="text" class="search" placeholder="검색어를 입력해주세요."/>
                                 </div>
                                 <div class="addRoom">
-                                    <img src="@/assets/add.svg"/>
+                                    <!--  -->
+                                    <addRoom></addRoom>
                                 </div>
                             </div>
                             <ul>
@@ -129,15 +130,22 @@
                 </v-card>
             </v-col>
         </v-row>
+
+        
     </v-container>
 </template>
 <script>
+    import addRoom from "@/components/addRoom.vue"
     import vClickOutSlide from 'v-click-outside'
     export default {
         name :"roomListPage",
         data: () => ({
-            isSidebar:false
+            isSidebar:false,
+            dialog: false
         }),
+        components:{
+            addRoom
+        },
         mounted(){
             this.axios.get("/roomList",{}).then((res)=>{
                 console.log(res);
