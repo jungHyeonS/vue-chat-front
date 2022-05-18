@@ -44,6 +44,9 @@ export default {
         }
     }),
     methods:{
+        /**
+         * @description 방생성
+         */
         roomCreate(){
             console.log(this.input);
             if(this.input.valid){

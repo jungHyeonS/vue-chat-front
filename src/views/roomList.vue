@@ -10,7 +10,7 @@
                                     <input type="text" class="search" placeholder="검색어를 입력해주세요."/>
                                 </div>
                                 <div class="addRoom">
-                                    <!--  -->
+                                    <!--방생성 컴포넌트-->
                                     <addRoom></addRoom>
                                 </div>
                             </div>
@@ -147,14 +147,29 @@
             addRoom
         },
         mounted(){
-            this.axios.get("/roomList",{}).then((res)=>{
-                console.log(res);
-            }).catch((err)=>{
-                console.log(err);
-            });
+            this.getRoomList();
 
+            this.$socket.on("sendRoomList",(data)=>{
+                console.log("sendRoomList",data);
+            });
         },
         methods:{
+
+            getRoomList(){
+                // this.axios.get("/roomList",{}).then((res)=>{
+                //     console.log(res);
+                // }).catch((err)=>{
+                //     console.log(err);
+                // });
+                // console.log("socket",this.$socket);
+                this.$socket.emit("roomList",{
+                    id : "test"
+                })
+            },
+
+            /**
+             * @description 모바일 메뉴 클릭 이벤트
+             */
             onClick(e){
                 if(e.target.parentNode !== this.$refs.titlebar){
                     this.isSidebar = false;
