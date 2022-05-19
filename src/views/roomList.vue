@@ -7,84 +7,16 @@
                         <div class="roomList" :class="{'roomDp':isSidebar}" ref="room" v-click-outside="onClick">
                             <div class="searchBar clearfix">
                                 <div class="searchWrap">
-                                    <input type="text" class="search" placeholder="검색어를 입력해주세요."/>
+                                    <input type="text" class="search" placeholder="검색어를 입력해주세요." v-model="searchRoom"  @keyup.enter="getRoomList()" @blur="getRoomList()"/>
                                 </div>
                                 <div class="addRoom">
                                     <!--방생성 컴포넌트-->
-                                    <addRoom></addRoom>
+                                    <addRoom @roomListChange="getRoomList()"></addRoom>
                                 </div>
                             </div>
                             <ul>
-                                <li>
-                                    <h1>채팅방 1
-                                        
-                                    </h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
-                                    <div class="bar"></div>
-                                </li>
-                                <li>
-                                    <h1>채팅방 1</h1>
+                                <li v-for="(item,index) in roomList" :key="index">
+                                    <h1>{{item.roomName}}</h1>
                                     <p>현재 접속 인원 : 20명</p>
                                     <span class="time">오후 12:28</span>
                                     <div class="bar"></div>
@@ -141,7 +73,9 @@
         name :"roomListPage",
         data: () => ({
             isSidebar:false,
-            dialog: false
+            dialog: false,
+            searchRoom:"",
+            roomList : []
         }),
         components:{
             addRoom
@@ -150,7 +84,7 @@
             this.getRoomList();
 
             this.$socket.on("sendRoomList",(data)=>{
-                console.log("sendRoomList",data);
+                this.roomList = data.list;
             });
         },
         methods:{
@@ -163,7 +97,7 @@
                 // });
                 // console.log("socket",this.$socket);
                 this.$socket.emit("roomList",{
-                    id : "test"
+                    roomName : this.searchRoom
                 })
             },
 

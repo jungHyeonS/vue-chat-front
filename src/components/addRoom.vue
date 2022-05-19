@@ -57,6 +57,7 @@ export default {
                     // console.log(res);
                     if(res.data.err == 0){
                         alert("방이 생성되었습니다.");
+                        this.$emit("roomListChange")
                         this.dialog = false;
                     }else{
                         alert(res.data.errMsg);
