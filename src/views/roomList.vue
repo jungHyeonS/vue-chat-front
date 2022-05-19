@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <ul>
-                                <li v-for="(item,index) in roomList" :key="index">
+                                <li v-for="(item,index) in roomList" :key="index" @click="joinRoom(item)">
                                     <h1>{{item.roomName}}</h1>
                                     <p>현재 접속 인원 : 20명</p>
                                     <span class="time">오후 12:28</span>
@@ -24,39 +24,7 @@
                             </ul>
                         </div>
                         <div class="chat">
-                            <div class="titleBar clearfix" ref="titlebar">
-                                <img src="@/assets/list.svg" @click="isSidebar = true"/>
-                                <h1>채팅방 1</h1>
-                            </div>
-                            <div class="chatList">
-                                <div class="chatItem otherChat clearfix">
-                                    <div class="chatWrap">
-                                        <p>사용자1</p>
-                                        <div class="content">
-                                            안녕하세요 안녕하세요
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="chatItem meChat clearfix">
-                                    <div class="chatWrap">
-                                        <div class="content">
-                                            안녕하세요 안녕하세요
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="chatSend clearfix">
-                                <textarea>aa</textarea>
-                                <div class="sendBtn">
-                                    
-                                    <v-icon color="white">
-                                        mdi-send
-                                    </v-icon>
-                                </div>
-                            </div>
+                            <chat></chat>
                         </div>
                     </div>
                 </v-card>
@@ -68,6 +36,7 @@
 </template>
 <script>
     import addRoom from "@/components/addRoom.vue"
+    import chat from "@/components/chat.vue"
     import vClickOutSlide from 'v-click-outside'
     export default {
         name :"roomListPage",
@@ -78,7 +47,8 @@
             roomList : []
         }),
         components:{
-            addRoom
+            addRoom,
+            chat
         },
         mounted(){
             this.getRoomList();
@@ -88,14 +58,12 @@
             });
         },
         methods:{
-
+            joinRoom(item){
+                this.$socket.emit("joinRoom",{
+                    roomIdx : item.idx
+                })
+            },
             getRoomList(){
-                // this.axios.get("/roomList",{}).then((res)=>{
-                //     console.log(res);
-                // }).catch((err)=>{
-                //     console.log(err);
-                // });
-                // console.log("socket",this.$socket);
                 this.$socket.emit("roomList",{
                     roomName : this.searchRoom
                 })
