@@ -106,6 +106,13 @@
   float: left;
 }
 
+.chat .emptyChat p {
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+  line-height: 600px;
+}
+
 .wrap {
   height: 600px;
 }
@@ -114,6 +121,7 @@
   width: 100%;
   border: 1px solid #ddd;
   padding: 10px;
+  min-height: 46px;
 }
 
 .wrap .titleBar h1 {
@@ -130,6 +138,8 @@
 .wrap .chatList {
   background: rgba(202, 229, 255, 0.3);
   min-height: 500px;
+  height: 500px;
+  overflow: scroll;
 }
 
 .wrap .chatList .chatItem {

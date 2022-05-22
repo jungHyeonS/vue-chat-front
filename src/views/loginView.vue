@@ -55,7 +55,8 @@
                         if(res.data.err == 0){
                             alert("로그인 성공");
                             this.$store.commit("SET_TOKEN",res.data.accessToken)
-                            this.$router.replace('/roomList')
+                            this.$store.commit("SET_USERIDX",res.data.userIdx)
+                            this.$router.push('/roomList')
                         }else{
                             alert(res.data.errMsg);
                         }

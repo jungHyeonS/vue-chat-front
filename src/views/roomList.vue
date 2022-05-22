@@ -24,7 +24,12 @@
                             </ul>
                         </div>
                         <div class="chat">
-                            <chat></chat>
+                            <div class="titleBar clearfix" ref="titlebar">
+                                <img src="@/assets/list.svg" @click="isSidebar = true"/>
+                                <h1 v-if="currentRoomIdx">{{currentRoomTitle}}</h1>
+                                <h1 v-else>채팅방을 선택해주세요</h1>
+                            </div>
+                            <chat :roomIdx="currentRoomIdx"></chat>
                         </div>
                     </div>
                 </v-card>
@@ -44,7 +49,9 @@
             isSidebar:false,
             dialog: false,
             searchRoom:"",
-            roomList : []
+            roomList : [],
+            currentRoomIdx:0,
+            currentRoomTitle:""
         }),
         components:{
             addRoom,
@@ -56,12 +63,19 @@
             this.$socket.on("sendRoomList",(data)=>{
                 this.roomList = data.list;
             });
+            this.$socket.on("joinRoomSuccess",data =>{
+                this.currentRoomIdx = data.roomIdx
+                const index = this.roomList.findIndex((item) => item.idx == this.currentRoomIdx);
+                this.currentRoomTitle = this.roomList[index].roomName
+                this.isSidebar = false
+            })
         },
         methods:{
             joinRoom(item){
                 this.$socket.emit("joinRoom",{
                     roomIdx : item.idx
                 })
+               
             },
             getRoomList(){
                 this.$socket.emit("roomList",{
