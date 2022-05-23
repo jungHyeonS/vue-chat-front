@@ -71,12 +71,21 @@
             })
         },
         methods:{
+
+            /**
+             * @description 방입장
+             */
             joinRoom(item){
                 this.$socket.emit("joinRoom",{
-                    roomIdx : item.idx
+                    roomIdx : item.idx,
+                    userIdx : this.$store.state.userIdx
                 })
                
             },
+
+            /**
+             * @description 방 리스트
+             */
             getRoomList(){
                 this.$socket.emit("roomList",{
                     roomName : this.searchRoom

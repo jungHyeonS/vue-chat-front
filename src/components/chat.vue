@@ -50,6 +50,9 @@ export default {
     },
     methods:{
 
+        /**
+         * @description 채팅 리스트가져오기 (REST)
+         */
         getChatList(roomIdx){
             this.axios.get(`/chatList/${roomIdx}`,{}).then((res)=>{
                 if(!res.data.err){
@@ -70,8 +73,15 @@ export default {
             this.$socket.on("getChatList",data =>{
                 console.log("getChatList",data);
                 this.chatList = data.chatList
+                setTimeout(()=>{
+                    this.$refs.chatList.scrollTop = this.$refs.chatList.scrollHeight
+                },100)
             })
         },
+
+        /**
+         * @description 메세지 전송
+         */
         sendMessage(){
             let params = {
                 content : this.content,
