@@ -4,17 +4,7 @@
             <p>채팅방을 클릭하여 채팅을 시작해보세요!</p>
         </div>
         <div class="chatWrap" v-else>
-            <div class="chatList">
-                <!-- <div class="chatItem otherChat clearfix">
-                    <div class="chatWrap">
-                        <p>사용자1</p>
-                        <div class="content">
-                            안녕하세요 안녕하세요
-                        </div>
-                    </div>
-                    
-                </div> -->
-
+            <div class="chatList" ref="chatList">
                 <div class="chatItem  clearfix" v-for="(item,index) in chatList" :key="index"
                 :class="{'meChat' : $store.state.userIdx == item.userIdx, 'otherChat' : $store.state.userIdx != item.userIdx}">
                     <div class="chatWrap">
@@ -23,7 +13,6 @@
                             {{item.content}}
                         </div>
                     </div>
-                    
                 </div>
             </div>
             <div class="chatSend clearfix">
@@ -53,17 +42,36 @@ export default {
     watch: {
         roomIdx: function(value, oldValue) {
             this.content = "";
-            console.log(value);
-            console.log(oldValue);
+            this.getChatList(value)
         }
     },
     mounted(){
-        this.$socket.on("getChatList",data =>{
-            console.log("getChatList",data);
-            this.chatList = data.chatList
-        })
+        this.getSocektChatList();
     },
     methods:{
+
+        getChatList(roomIdx){
+            this.axios.get(`/chatList/${roomIdx}`,{}).then((res)=>{
+                if(!res.data.err){
+                    this.chatList = res.data.list
+                    setTimeout(()=>{
+                        this.$refs.chatList.scrollTop = this.$refs.chatList.scrollHeight
+                    },100)
+                }
+            }).catch((err)=>{
+                console.log(err);
+            });
+        },
+
+        /**
+         * @description 채팅 리스트 가져오기 (소켓)
+         */
+        getSocektChatList(){
+            this.$socket.on("getChatList",data =>{
+                console.log("getChatList",data);
+                this.chatList = data.chatList
+            })
+        },
         sendMessage(){
             let params = {
                 content : this.content,
@@ -73,6 +81,7 @@ export default {
             this.$socket.emit("sendMessage",{
                 input : params
             })
+            this.content = "";
         }
     }
 }
