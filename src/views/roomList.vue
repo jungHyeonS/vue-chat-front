@@ -80,7 +80,6 @@
                     roomIdx : item.idx,
                     userIdx : this.$store.state.userIdx
                 })
-               
             },
 
             /**

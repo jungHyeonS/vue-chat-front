@@ -14,6 +14,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="joinOther">
+                    <p>서정현 님이 입장하셨습니다</p>
+                </div> -->
             </div>
             <div class="chatSend clearfix">
                 <textarea v-model="content"></textarea>
@@ -46,6 +49,24 @@ export default {
         }
     },
     mounted(){
+        this.$socket.on("joinOtherUser",(data)=>{
+            // console.log("joinOtherUser",data);
+            let isRoomCheck = data.isRoomCheck;
+            if(isRoomCheck.isJoin == "Y"){
+                let newDiv = document.createElement("div");
+                newDiv.innerHTML = "<p>서정현 님이 입장하셨습니다</p>";
+                newDiv.setAttribute("class","joinOther")
+                setTimeout(()=>{
+                    this.$refs.chatList.appendChild(newDiv);
+                },500)
+                // let newDiv = document.createElement("div");​
+
+                // newDIV.innerHTML = "<p>서정현 님이 입장하셨습니다</p>";
+                // newDiv.setAttribute("class","joinOther")
+                // this.$refs.chatList.appendChild(newDiv);
+            }
+        })
+
         this.getSocektChatList();
     },
     methods:{
