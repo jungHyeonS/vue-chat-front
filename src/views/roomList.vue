@@ -28,6 +28,7 @@
                                 <img src="@/assets/list.svg" @click="isSidebar = true"/>
                                 <h1 v-if="currentRoomIdx">{{currentRoomTitle}}</h1>
                                 <h1 v-else>채팅방을 선택해주세요</h1>
+                                <p @click="outRoom()" v-if="currentRoomIdx">나가기</p>
                             </div>
                             <chat :roomIdx="currentRoomIdx"></chat>
                         </div>
@@ -71,6 +72,18 @@
             })
         },
         methods:{
+
+            /**
+             * @description 방퇴장
+             */
+            outRoom(){
+                if(confirm("정말로 채팅방을 나가시겠습니까?")){
+                    this.$socket.emit("outRoom",{
+                        roomIdx : this.currentRoomIdx,
+                        userIdx : this.$store.state.userIdx
+                    })
+                }
+            },
 
             /**
              * @description 방입장

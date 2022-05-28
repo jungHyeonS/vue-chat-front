@@ -107,6 +107,13 @@
             float: left;
             display: none;
         }
+        p{
+            float: right;
+            margin: 0;
+            cursor: pointer;
+            font-weight: bold;
+            color: red;
+        }
     }
     .chatList{
         background:rgba(202, 229, 255, .3);
