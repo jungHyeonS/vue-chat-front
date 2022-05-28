@@ -5,15 +5,22 @@
         </div>
         <div class="chatWrap" v-else>
             <div class="chatList" ref="chatList">
-                <div class="chatItem  clearfix" v-for="(item,index) in chatList" :key="index"
-                :class="{'meChat' : $store.state.userIdx == item.userIdx, 'otherChat' : $store.state.userIdx != item.userIdx}">
-                    <div class="chatWrap">
-                        <p v-if="$store.state.userIdx != item.userIdx">{{item.nickname}}</p>
-                        <div class="content">
-                            {{item.content}}
+                <div v-for="(item,index) in chatList" :key="index">
+                    <div class="chatItem  clearfix" v-if="item.isQuit == 'N'"
+                    :class="{'meChat' : $store.state.userIdx == item.userIdx, 'otherChat' : $store.state.userIdx != item.userIdx}">
+                        <div class="chatWrap">
+                            <p v-if="$store.state.userIdx != item.userIdx">{{item.nickname}}</p>
+                            <div class="content">
+                                {{item.content}}
+                            </div>
                         </div>
                     </div>
+                    <div v-else class="joinOther">
+                        <p>{{item.content}}</p>
+                    </div>
                 </div>
+                
+                
                 <!-- <div class="joinOther">
                     <p>서정현 님이 입장하셨습니다</p>
                 </div> -->
@@ -49,24 +56,6 @@ export default {
         }
     },
     mounted(){
-        this.$socket.on("joinOtherUser",(data)=>{
-            // console.log("joinOtherUser",data);
-            let isRoomCheck = data.isRoomCheck;
-            if(isRoomCheck.isJoin == "Y"){
-                let newDiv = document.createElement("div");
-                newDiv.innerHTML = "<p>서정현 님이 입장하셨습니다</p>";
-                newDiv.setAttribute("class","joinOther")
-                setTimeout(()=>{
-                    this.$refs.chatList.appendChild(newDiv);
-                },500)
-                // let newDiv = document.createElement("div");​
-
-                // newDIV.innerHTML = "<p>서정현 님이 입장하셨습니다</p>";
-                // newDiv.setAttribute("class","joinOther")
-                // this.$refs.chatList.appendChild(newDiv);
-            }
-        })
-
         this.getSocektChatList();
     },
     methods:{
