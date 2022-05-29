@@ -51,6 +51,7 @@ export default {
     }),
     watch: {
         roomIdx: function(value, oldValue) {
+            console.log("roomIdx",value);
             this.content = "";
             this.getChatList(value)
         }

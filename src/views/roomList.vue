@@ -70,6 +70,12 @@
                 this.currentRoomTitle = this.roomList[index].roomName
                 this.isSidebar = false
             })
+
+            this.$socket.on("outRoomSuccess",data=>{
+                this.currentRoomIdx = 0;
+                this.currentRoomTitle = "";
+                console.log(this.currentRoomIdx);
+            });
         },
         methods:{
 
