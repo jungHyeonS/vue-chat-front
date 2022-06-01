@@ -4,7 +4,7 @@
             <v-col cols="12" sm="8" md="4" lg="4">
                 <v-card>
                     <v-toolbar dark color="primary">
-                        <v-toolbar-title>Login form</v-toolbar-title>
+                        <v-toolbar-title>로그인</v-toolbar-title>
                         <v-spacer></v-spacer>
                     </v-toolbar>
                     <v-card-text>

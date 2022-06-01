@@ -17,8 +17,8 @@
                             <ul>
                                 <li v-for="(item,index) in roomList" :key="index" @click="joinRoom(item)">
                                     <h1>{{item.roomName}}</h1>
-                                    <p>현재 접속 인원 : 20명</p>
-                                    <span class="time">오후 12:28</span>
+                                    <p>현재 참가 인원 : {{item.currentUser}}명</p>
+                                    <span class="time">{{item.lastChat}}</span>
                                     <div class="bar"></div>
                                 </li>
                             </ul>
@@ -63,6 +63,10 @@
 
             this.$socket.on("sendRoomList",(data)=>{
                 this.roomList = data.list;
+                for(let item of this.roomList){
+                    this.$store.commit("SET_LAST_CHAT_DATE",item.lastChat)
+                    item.lastChat = this.$store.state.lastChatDate
+                }
             });
             this.$socket.on("joinRoomSuccess",data =>{
                 this.currentRoomIdx = data.roomIdx
