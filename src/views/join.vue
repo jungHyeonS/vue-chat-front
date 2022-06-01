@@ -9,7 +9,7 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-form v-model="input.valid" ref="form">
-                            <v-text-field  label="아이디" type="text" v-model="input.id" :rules="input.idRules" required></v-text-field>
+                            <v-text-field  label="아이디" type="text" v-model="input.id" :rules="idRules" required></v-text-field>
                             <v-text-field  label="비밀번호" type="password" v-model="input.password" :rules="input.passRules" required></v-text-field>
                             <v-text-field  label="비밀번호확인" type="password" v-model="input.passwordChk" :rules="repeatPasswordRules" required></v-text-field>
                             <v-text-field  label="닉네임" type="text" v-model="input.nickname" :rules="input.nickRules" required></v-text-field>
@@ -40,7 +40,21 @@
                     (v) => (v === this.input.password) || '비밀번호가 일치 하지 않습니다',
                 ];
             },
+            idRules(){
+                return [
+                    (v) =>  !!v || '아이디를 입력해주세요.',
+                    (v) => {
+                        console.log(this.duplicateChk(v))
+                    }
+                ]
+            }
         },
+        // idRules: [
+        //             v => !!v || '아이디를 입력해주세요.',
+        //             v => {
+                        
+        //             }
+        //         ],
         data: () => ({
             input:{
                 valid: false,
@@ -48,9 +62,7 @@
                 password:"",
                 passwordChk:"",
                 nickname:"",
-                idRules: [
-                    v => !!v || '아이디를 입력해주세요.',
-                ],
+                
                 nickRules:[
                     v => !!v || '닉네임을 입력해주세요.',
                 ],
@@ -65,9 +77,32 @@
             }
         }),
         methods:{
+
+            duplicateChk(id){
+                if(id != ""){
+                    console.log("duplicateChk");
+                    let params = {
+                        id : id 
+                    }
+                    this.axios.post("duplicate",params).then((res)=>{
+                        if(res.data.cnt == 1){
+                            return false;
+                        }
+                    });
+                }
+                
+            },
+
+            /**
+             * @description 뒤로가기
+             */
             goBack(){
                 this.$router.go(-1)
             },
+
+            /**
+             * @description 회원가입
+             */
             join(){
                 if(this.input.valid){
                     let params = this.input;
