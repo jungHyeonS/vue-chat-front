@@ -9,7 +9,7 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-form v-model="input.valid" ref="form">
-                            <v-text-field  label="아이디" type="text" v-model="input.id" :rules="input.idRules" required @input="checkId()"></v-text-field>
+                            <v-text-field  label="아이디" type="text" v-model="input.id" :rules="input.idRules" :error-messages="input.idRulesDup" required @input="checkId()"></v-text-field>
                             <v-text-field  label="비밀번호" type="password" v-model="input.password" :rules="input.passRules" required></v-text-field>
                             <v-text-field  label="비밀번호확인" type="password" v-model="input.passwordChk" :rules="repeatPasswordRules" required></v-text-field>
                             <v-text-field  label="닉네임" type="text" v-model="input.nickname" :rules="input.nickRules" required></v-text-field>
@@ -41,12 +41,6 @@
                 ];
             },
         },
-        // idRules: [
-        //             v => !!v || '아이디를 입력해주세요.',
-        //             v => {
-                        
-        //             }
-        //         ],
         data(){
             return{
                 input:{
@@ -78,20 +72,16 @@
         },
         methods:{
             checkId(){
-                // console.log(this.input.id);
-                this.$store.dispatch('duplicateChk', this.input.id)
-                console.log(this.$store.state.duplicateCount)
-            },
-            duplicateChk(){
-                setTimeout(function(){
-                    console.log(this.$store.state.duplicateCount)
-                    if(this.$store.state.duplicateCount){
-                        return "이미 등록된 아이디 입니다"
+                let params = {
+                    id : this.input.id
+                }
+                this.axios.post("/duplicate",params).then((res)=>{
+                    if(res.data.cnt){
+                        this.input.idRulesDup.push("이미 등록된 아이디 입니다")
                     }else{
-                        return true;
+                        this.input.idRulesDup = [];
                     }
-                },500)
-                
+                })
             },
 
             /**
