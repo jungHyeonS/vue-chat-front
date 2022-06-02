@@ -9,7 +9,7 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-form v-model="input.valid" ref="form">
-                            <v-text-field  label="아이디" type="text" v-model="input.id" :rules="idRules" required></v-text-field>
+                            <v-text-field  label="아이디" type="text" v-model="input.id" :rules="input.idRules" required @input="checkId()"></v-text-field>
                             <v-text-field  label="비밀번호" type="password" v-model="input.password" :rules="input.passRules" required></v-text-field>
                             <v-text-field  label="비밀번호확인" type="password" v-model="input.passwordChk" :rules="repeatPasswordRules" required></v-text-field>
                             <v-text-field  label="닉네임" type="text" v-model="input.nickname" :rules="input.nickRules" required></v-text-field>
@@ -40,14 +40,6 @@
                     (v) => (v === this.input.password) || '비밀번호가 일치 하지 않습니다',
                 ];
             },
-            idRules(){
-                return [
-                    (v) =>  !!v || '아이디를 입력해주세요.',
-                    (v) => {
-                        console.log(this.duplicateChk(v))
-                    }
-                ]
-            }
         },
         // idRules: [
         //             v => !!v || '아이디를 입력해주세요.',
@@ -55,41 +47,50 @@
                         
         //             }
         //         ],
-        data: () => ({
-            input:{
-                valid: false,
-                id:"",
-                password:"",
-                passwordChk:"",
-                nickname:"",
-                
-                nickRules:[
-                    v => !!v || '닉네임을 입력해주세요.',
-                ],
-                passRules:[
-                    v => !!v || '비밀번호를 입력해주세요.',
-                    v => {
-                        let target = v;
-                        let regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-                        return regExp.test(target) || "비밀번호는 8자이상 16자리 이하,하나 이상에 숫자,영어,특수문자를 포함해주세요.";
-                    }
-                ]
-            }
-        }),
-        methods:{
+        data(){
+            return{
+                input:{
+                    valid: false,
+                    id:"",
+                    idRulesDup:[],
+                    password:"",
+                    passwordChk:"",
+                    nickname:"",
+                    
+                    idRules:[
+                         v => !!v || '아이디를 입력해주세요',
+                         v => this.duplicateChk(v)
+                    ],
 
-            duplicateChk(id){
-                if(id != ""){
-                    console.log("duplicateChk");
-                    let params = {
-                        id : id 
-                    }
-                    this.axios.post("duplicate",params).then((res)=>{
-                        if(res.data.cnt == 1){
-                            return false;
+                    nickRules:[
+                        v => !!v || '닉네임을 입력해주세요.',
+                    ],  
+                    passRules:[
+                        v => !!v || '비밀번호를 입력해주세요.',
+                        v => {
+                            let target = v;
+                            let regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+                            return regExp.test(target) || "비밀번호는 8자이상 16자리 이하,하나 이상에 숫자,영어,특수문자를 포함해주세요.";
                         }
-                    });
+                    ]
                 }
+            }
+        },
+        methods:{
+            checkId(){
+                // console.log(this.input.id);
+                this.$store.dispatch('duplicateChk', this.input.id)
+                console.log(this.$store.state.duplicateCount)
+            },
+            duplicateChk(){
+                setTimeout(function(){
+                    console.log(this.$store.state.duplicateCount)
+                    if(this.$store.state.duplicateCount){
+                        return "이미 등록된 아이디 입니다"
+                    }else{
+                        return true;
+                    }
+                },500)
                 
             },
 
