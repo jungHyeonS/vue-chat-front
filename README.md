@@ -1,20 +1,19 @@
 # vue-chat-front
 
-## Project setup
+## Project Name
+Vuetify Chating Front
+
+## Project Description
+Vuetify 라이브러리와 socket io 로 구성된 채팅 웹 사이트 입니다
+
+### Project Setup
 ```
-npm install
+git clone https://github.com/jungHyeonS/vue-chat-front.git
+```
+```
+npm i
 ```
 
-### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# vue-chat-front
