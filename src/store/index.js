@@ -10,7 +10,6 @@ export default new Vuex.Store({
     token : "",
     userIdx:"",
     lastChatDate:"",
-    duplicateCount:0
   },
   getters: {
   },
@@ -37,19 +36,8 @@ export default new Vuex.Store({
         }
       }
     },
-    SET_DUPLICATE_COUNT(state,value){
-      state.duplicateCount = value
-    }
   },
   actions: {
-    duplicateChk({ commit },id){
-      let params = {
-        id : id
-      }
-      axios.post("http://localhost:3000/duplicate",params).then((res)=>{
-        commit("SET_DUPLICATE_COUNT",res.data.cnt);
-      })
-    }
   },
   modules: {
   },
