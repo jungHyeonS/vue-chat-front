@@ -23,7 +23,7 @@ _axios.interceptors.request.use(
     if(location.href.includes("local")){
       //로컬 서버
       //api 호스트 주소
-      config.baseURL = "http://localhost:3000";
+      config.baseURL = "http://localhost:3005";
     }
     // Do something before request is sent
     //content type : json

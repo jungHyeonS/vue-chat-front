@@ -19,11 +19,6 @@
                         <p>{{item.content}}</p>
                     </div>
                 </div>
-                
-                
-                <!-- <div class="joinOther">
-                    <p>서정현 님이 입장하셨습니다</p>
-                </div> -->
             </div>
             <div class="chatSend clearfix">
                 <textarea v-model="content"></textarea>

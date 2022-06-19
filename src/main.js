@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import io from 'socket.io-client'; 
-const socket = io('http://localhost:3000',{
+const socket = io('http://localhost:3005',{
   withCredentials: true,
   extraHeaders: {
     "extra-custrom-headeres": "localhost"
